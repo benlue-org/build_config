@@ -1,0 +1,71 @@
+# Unlegacy Android build target list
+# <device> <build_type> <branch> [[period: "D"aily, "W"eekly, "M"onthly, "N"one] [build_day]]
+# Absence of a period indicates Daily (the default)
+# If W or M build_day must be specified, for W from 1 to 7 and for M from 01 to XX
+# where XX is the last day of the month
+# If we want just specify a device to be built manually without a specific day, "N" for none.
+
+# aosp-4.4
+## OMAP4
+espresso user aosp-4.4 N
+espresso3g user aosp-4.4 N
+tuna user aosp-4.4 N
+## TEGRA 3
+picasso2 userdebug aosp-4.4 N
+
+# aosp-6.0
+## OMAP4
+espresso user aosp-6.0 N
+espresso3g user aosp-6.0 N
+hummingbird userdebug aosp-6.0 N
+ovation userdebug aosp-6.0 N
+tuna user aosp-6.0 N
+## QCOM
+hammerhead userdebug aosp-6.0 N
+mako user aosp-6.0 N
+## TEGRA 3
+a2109 userdebug aosp-6.0 N
+grouper user aosp-6.0 N
+picasso2 userdebug aosp-6.0 N
+tilapia user aosp-6.0 N
+
+# aosp 7.1
+## OMAP4
+acclaim userdebug aosp-7.1 N
+espresso userdebug aosp-7.1 N
+espresso3g userdebug aosp-7.1 N
+hummingbird userdebug aosp-7.1 N
+ovation userdebug aosp-7.1 N
+tuna userdebug aosp-7.1 N
+## QCOM
+deb user aosp-7.1 N
+flo user aosp-7.1 N
+hammerhead userdebug aosp-7.1 N
+mako user aosp-7.1 N
+## TEGRA
+a2109 userdebug aosp-7.1 N
+grouper user aosp-7.1 N
+tilapia user aosp-7.1 N
+flounder userdebug aosp-7.1 N
+flounder_lte userdebug aosp-7.1 N
+
+# aosp 8.0
+## OMAP4
+#acclaim userdebug aosp-8.0 W 5
+#espresso userdebug aosp-8.0 W 5
+#espresso3g userdebug aosp-8.0 W 5
+#hummingbird userdebug aosp-8.0 W 5
+#ovation userdebug aosp-8.0 W 5
+#tuna userdebug aosp-8.0 W 5
+## QCOM
+#flo userdebug aosp-8.0 W 5
+#hammerhead userdebug aosp-8.0 W 5
+#mako userdebug aosp-8.0 W 5
+## TEGRA
+#a2109 userdebug aosp-8.0 W 5
+#grouper userdebug aosp-8.0 W 5
+#tilapia userdebug aosp-8.0 W 5
+#flounder userdebug aosp-8.0 W 5
+#flounder_lte userdebug aosp-8.0 W 5
+
+# DO NOT REMOVE
