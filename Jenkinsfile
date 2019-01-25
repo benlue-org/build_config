@@ -260,7 +260,7 @@ node('builder') {
             rm -rf $ARCHIVE_DIR/**'''
         }
         stage('Code syncing') {
-            checkout poll: false, scm: [$class: 'RepoScm', currentBranch: true, destinationDir: '/home/lineageos/android/lineage/'+env.BRANCH, forceSync: true, jobs: 8, manifestBranch: env.BRANCH, manifestRepositoryUrl: 'https://github.com/Unlegacy-Android/android.git', noTags: true, quiet: true]
+            checkout poll: false, scm: [$class: 'RepoScm', currentBranch: true, destinationDir: '/home/lineageos/android/lineage/'+env.BRANCH, forceSync: true, jobs: 8, manifestBranch: env.BRANCH, manifestRepositoryUrl: '/mnt/e/los-mirror/LineageOS/android.git', noTags: true, quiet: true]
             // TODO: Create a saveManifest()
             ret = repoPickGerritChanges()
             if ( ret != 0 )
