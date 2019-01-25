@@ -250,14 +250,14 @@ node('builder') {
 
             echo 'Defining branch based prerequisites...'
             if (env.BRANCH == 'aosp-4.4') {
-                sh script: '''#!/bin/bash
+                sh '''#!/bin/bash
                 update-java-alternatives -s java-1.7.0-openjdk-amd64 2>/dev/null'''
                 env.OTA_COMMON_OPTIONS = ''
                 env.OTA_INC_EXTRA_OPTIONS = ''
                 env.OTA_FULL_EXTRA_OPTIONS = ''
                 echo 'BRANCH=aosp-4.4->[JDK=openjdk-7,OTA_COMMON_OPTIONS="'+env.OTA_COMMON_OPTIONS+'",OTA_INC_OPTIONS="'+env.OTA_INC_OPTIONS+'",OTA_FULL_OPTIONS="'+env.OTA_FULL_OPTIONS+'"]'
             } else {
-                sh script: '''#!/bin/bash
+                sh '''#!/bin/bash
                 update-java-alternatives -s java-1.8.0-openjdk-amd64 2>/dev/null'''
                 env.OTA_COMMON_OPTIONS = '-t ' + env.JOBS
                 env.OTA_INC_EXTRA_OPTIONS = ''
@@ -266,7 +266,7 @@ node('builder') {
             }
 
             echo 'Creating build directory structure...'
-            sh script: '''#!/bin/bash
+            sh '''#!/bin/bash
             mkdir -p /unlegacy/$BRANCH
             mkdir -p /unlegacy/repo-mirror
             ln -sf /unlegacy/repo-mirror /unlegacy/$BRANCH/.repo'''
