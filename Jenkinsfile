@@ -248,28 +248,11 @@ node('builder') {
             ''').trim()
             echo 'Cores available: ' + env.JOBS
 
-            echo 'Defining branch based prerequisites...'
-            if (env.BRANCH == 'aosp-4.4') {
-                sh '''#!/bin/bash
-                update-java-alternatives -s java-1.7.0-openjdk-amd64 2>/dev/null'''
-                env.OTA_COMMON_OPTIONS = ''
-                env.OTA_INC_EXTRA_OPTIONS = ''
-                env.OTA_FULL_EXTRA_OPTIONS = ''
-                echo 'BRANCH=aosp-4.4->[JDK=openjdk-7,OTA_COMMON_OPTIONS="'+env.OTA_COMMON_OPTIONS+'",OTA_INC_OPTIONS="'+env.OTA_INC_OPTIONS+'",OTA_FULL_OPTIONS="'+env.OTA_FULL_OPTIONS+'"]'
-            } else {
-                sh '''#!/bin/bash
-                update-java-alternatives -s java-1.8.0-openjdk-amd64 2>/dev/null'''
-                env.OTA_COMMON_OPTIONS = '-t ' + env.JOBS
-                env.OTA_INC_EXTRA_OPTIONS = ''
-                env.OTA_FULL_EXTRA_OPTIONS = '--block'
-                echo 'BRANCH='+env.BRANCH+'->[JDK=openjdk-8,OTA_COMMON_OPTIONS="'+env.OTA_COMMON_OPTIONS+'",OTA_INC_OPTIONS="'+env.OTA_INC_OPTIONS+'",OTA_FULL_OPTIONS="'+env.OTA_FULL_OPTIONS+'"]'
-            }
-
             echo 'Creating build directory structure...'
             sh '''#!/bin/bash
-            mkdir -p /unlegacy/$BRANCH
-            mkdir -p /unlegacy/repo-mirror
-            ln -sf /unlegacy/repo-mirror /unlegacy/$BRANCH/.repo'''
+            mkdir -p /home/lineageos/android/lineage/$BRANCH
+            mkdir -p /home/lineageos/android/lineage/repo-mirror
+            ln -sf /home/lineageos/android/lineage/repo-mirror /home/lineageos/android/lineage/$BRANCH/.repo'''
 
             echo 'Preparing archive directory...'
             sh '''#!/bin/bash
@@ -277,7 +260,7 @@ node('builder') {
             rm -rf $ARCHIVE_DIR/**'''
         }
         stage('Code syncing') {
-            checkout poll: false, scm: [$class: 'RepoScm', currentBranch: true, destinationDir: '/unlegacy/'+env.BRANCH, forceSync: true, jobs: 8, manifestBranch: env.BRANCH, manifestRepositoryUrl: 'https://github.com/Unlegacy-Android/android.git', noTags: true, quiet: true]
+            checkout poll: false, scm: [$class: 'RepoScm', currentBranch: true, destinationDir: '/home/lineageos/android/lineage/'+env.BRANCH, forceSync: true, jobs: 8, manifestBranch: env.BRANCH, manifestRepositoryUrl: 'https://github.com/Unlegacy-Android/android.git', noTags: true, quiet: true]
             // TODO: Create a saveManifest()
             ret = repoPickGerritChanges()
             if ( ret != 0 )
