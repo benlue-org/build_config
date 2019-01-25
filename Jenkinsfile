@@ -1,7 +1,7 @@
 void resetSourceTree() {
   echo 'Reseting source tree...'
   dir(env.SOURCE_DIR) {
-    sh '''#!/usr/bin/env bash
+    sh '''#!/bin/bash
     repo forall -c "git reset --hard"'''
   }
 }
@@ -10,7 +10,7 @@ int cleanUp() {
   echo 'Cleaning up environment...'
   dir(env.SOURCE_DIR) {
     ansiColor('xterm') {
-      return sh (returnStatus: true, script: '''#!/usr/bin/env bash
+      return sh (returnStatus: true, script: '''#!/bin/bash
       # Load build environment
       . build/envsetup.sh
       lunch $LUNCH
@@ -28,7 +28,7 @@ int cleanUp() {
 void repoPickGerritChanges() {
   echo 'Applying gerrit changes...'
   dir(env.SOURCE_DIR) {
-    return sh (returnStatus: true, script: '''#!/usr/bin/env bash
+    return sh (returnStatus: true, script: '''#!/bin/bash
       function check_gerrit_picks_result {
         if [ "0" -ne "$?" ]
         then
@@ -56,7 +56,7 @@ int build(String buildTargets) {
   env.BUILD_TARGETS = buildTargets
   dir(env.SOURCE_DIR) {
     ansiColor('xterm') {
-      return sh (returnStatus: true, script: '''#!/usr/bin/env bash
+      return sh (returnStatus: true, script: '''#!/bin/bash
       # Make sure ccache is in PATH
       export PATH="$PATH:/opt/local/bin/:$PWD/prebuilts/misc/$(uname|awk '{print tolower($0)}')-x86/ccache"
 
@@ -115,7 +115,7 @@ int createOtaPackage(String otaType) {
   env.OTA_TYPE = otaType
   dir(env.SOURCE_DIR) {
     ansiColor('xterm') {
-      return sh (returnStatus: true, script: '''#!/usr/bin/env bash
+      return sh (returnStatus: true, script: '''#!/bin/bash
       export OTA_EXIT_CODE=0
       # Load build environment
       . build/envsetup.sh
@@ -204,7 +204,7 @@ int publishToPortal(String path) {
   env.OTA_URL_PATH = path
   dir(env.SOURCE_DIR) {
     ansiColor('xterm') {
-      return sh (returnStatus: true, script: '''#!/usr/bin/env bash
+      return sh (returnStatus: true, script: '''#!/bin/bash
       export PLATFORM_VERSION=`grep ro.build.version.release ${ARCHIVE_DIR}/build.prop | cut -d '=' -f2`
       export FILENAME=$(basename $(ls ${ARCHIVE_DIR}/${BUILD_PRODUCT}_${DEVICE}-${PLATFORM_VERSION}*.zip))
       export MD5SUM=$(cat ${ARCHIVE_DIR}/${BUILD_PRODUCT}_${DEVICE}-${PLATFORM_VERSION}*.zip.md5sum)
@@ -243,21 +243,21 @@ node('builder') {
 
             // Number of available cores to build
             echo 'Getting the number of available cores...'
-            env.JOBS = sh (returnStdout: true, script: '''#!/usr/bin/env bash
+            env.JOBS = sh (returnStdout: true, script: '''#!/bin/bash
             expr 0 + $(grep -c ^processor /proc/cpuinfo)
             ''').trim()
             echo 'Cores available: ' + env.JOBS
 
             echo 'Defining branch based prerequisites...'
             if (env.BRANCH == 'aosp-4.4') {
-                sh script: '''#!/usr/bin/env bash
+                sh script: '''#!/bin/bash
                 update-java-alternatives -s java-1.7.0-openjdk-amd64 2>/dev/null'''
                 env.OTA_COMMON_OPTIONS = ''
                 env.OTA_INC_EXTRA_OPTIONS = ''
                 env.OTA_FULL_EXTRA_OPTIONS = ''
                 echo 'BRANCH=aosp-4.4->[JDK=openjdk-7,OTA_COMMON_OPTIONS="'+env.OTA_COMMON_OPTIONS+'",OTA_INC_OPTIONS="'+env.OTA_INC_OPTIONS+'",OTA_FULL_OPTIONS="'+env.OTA_FULL_OPTIONS+'"]'
             } else {
-                sh script: '''#!/usr/bin/env bash
+                sh script: '''#!/bin/bash
                 update-java-alternatives -s java-1.8.0-openjdk-amd64 2>/dev/null'''
                 env.OTA_COMMON_OPTIONS = '-t ' + env.JOBS
                 env.OTA_INC_EXTRA_OPTIONS = ''
@@ -266,13 +266,13 @@ node('builder') {
             }
 
             echo 'Creating build directory structure...'
-            sh script: '''#!/usr/bin/env bash
+            sh script: '''#!/bin/bash
             mkdir -p /unlegacy/$BRANCH
             mkdir -p /unlegacy/repo-mirror
             ln -sf /unlegacy/repo-mirror /unlegacy/$BRANCH/.repo'''
 
             echo 'Preparing archive directory...'
-            sh '''#!/usr/bin/env bash
+            sh '''#!/bin/bash
             mkdir -p $ARCHIVE_DIR
             rm -rf $ARCHIVE_DIR/**'''
         }
