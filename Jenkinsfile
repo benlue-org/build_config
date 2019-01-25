@@ -1,3 +1,4 @@
+/*
 void resetSourceTree() {
   echo 'Reseting source tree...'
   dir(env.SOURCE_DIR) {
@@ -223,7 +224,7 @@ int publishToPortal(String path) {
     }
   }
 }
-
+*/
 node('builder') {
     try {
         currentBuild.description = env.BUILD_PRODUCT+'_'+env.DEVICE+'-'+env.BRANCH
